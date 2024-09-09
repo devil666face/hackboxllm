@@ -36,13 +36,13 @@ tasks:
     desc: "Pull and save containers localy if not exists"
     cmds:
       - |
-        if [ ! -f "./llm-engine.tar.gz" ]; then
+        if [ ! -f "./engine.tar.gz" ]; then
           docker pull ollama/ollama:latest
-          docker tag ollama/ollama:latest llm-engine:latest
-          docker save llm-engine:latest | gzip > llm-engine.tar.gz
+          docker tag ollama/ollama:latest engine:latest
+          docker save engine:latest | gzip > engine.tar.gz
         fi
-        if [ ! -f "./llm-web.tar.gz" ]; then
+        if [ ! -f "./web.tar.gz" ]; then
           docker pull ghcr.io/open-webui/open-webui:main
-          docker tag ghcr.io/open-webui/open-webui:main llm-web:latest
-          docker save llm-web:latest | gzip > llm-web.tar.gz
+          docker tag ghcr.io/open-webui/open-webui:main web:latest
+          docker save web:latest | gzip > web.tar.gz
         fi

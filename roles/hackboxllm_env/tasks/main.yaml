@@ -1,4 +1,11 @@
 ---
+- name: Enable IP forwarding temporarily
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
 - name: Install docker requirements
   apt:
     name:
@@ -11,23 +18,17 @@
   docker_image:
     name: "{{ ollama_tag }}"
     source: pull
-
 - name: Pull docker images for rename it
   docker_image:
     name: "{{ web_tag }}"
     source: pull
 
 - name: Rename (tag) the Docker image
-  docker_image:
-    name: "{{ ollama_tag }}"
-    tag: llm-engine:latest
-    source: local
-
+  shell: |
+    docker tag {{ ollama_tag }} engine:latest
 - name: Rename (tag) the Docker image
-  docker_image:
-    name: "{{ web_tag }}"
-    tag: llm-web:latest
-    source: local
+  shell: |
+    docker tag {{ web_tag }} web:latest
 
 - name: Ensure the target docker directory exists
   file:

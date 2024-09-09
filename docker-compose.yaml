@@ -1,27 +1,30 @@
 version: "3"
 
 services:
-  llm-engine:
-    volumes:
-      - ./volumes/engine:/root/.ollama
-    container_name: llm-engine
+  engine:
+    image: engine:latest
+    # image: ollama/ollama:latest
+    container_name: engine
     pull_policy: always
     tty: true
+    volumes:
+      - ./volumes/engine:/root/.ollama
     restart: unless-stopped
-    image: llm-engine:latest
 
-  llm-web:
-    image: llm-web:latest
-    container_name: llm-web
+  web:
+    image: web:latest
+    # image: ghcr.io/open-webui/open-webui:main
+    container_name: web
+    depends_on:
+      - engine
+    environment:
+      - 'OLLAMA_BASE_URL=http://engine:11434'
+      - 'WEBUI_SECRET_KEY='
+    ports:
+      - 80:8080
     volumes:
       - ./volumes/web:/app/backend/data
-    depends_on:
-      - llm-engine
-    ports:
-      - 443:8080
-    environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434'
-      - 'WEBUI_SECRET_KEY='
+    # Я хз что это
+    extra_hosts:
+      - host.docker.internal:host-gateway
     restart: unless-stopped
-    # extra_hosts:
-    #   - host.docker.internal:host-gateway

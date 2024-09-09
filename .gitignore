@@ -1,4 +1,7 @@
 /keys/id_rsa
+/creds
 /venv
 /inventory.ini
 /vars.yaml
+/engine.tar.gz
+/web.tar.gz
