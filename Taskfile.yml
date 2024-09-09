@@ -1,0 +1,19 @@
+version: "3"
+
+vars:
+  PIP_PATH: "./venv/bin/pip"
+  PYTHON_PATH: "./venv/bin/python"
+  ANSBILE_PATH: "./venv/bin/ansible"
+  PLAYBOOK_PATH: "./venv/bin/ansible-playbook"
+
+tasks:
+  init:
+    desc: "Local ansbile installation"
+    cmds:
+      - python3 -m venv venv
+      - "{{.PIP_PATH}} install -r requirements.txt"
+
+  ping:
+    desc: "Ping inventory.ini"
+    cmds:
+      - "{{.ANSBILE_PATH}} -m ping all"
