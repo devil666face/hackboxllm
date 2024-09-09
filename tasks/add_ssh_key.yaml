@@ -1,0 +1,7 @@
+---
+- name: Add key
+  ignore_errors: true
+  timeout: 60
+  authorized_key:
+    user: "{{ ssh_key_user }}"
+    key: "{{ lookup('file', ssh_pub_key) }}"

@@ -7,13 +7,42 @@ vars:
   PLAYBOOK_PATH: "./venv/bin/ansible-playbook"
 
 tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+
   init:
     desc: "Local ansbile installation"
     cmds:
       - python3 -m venv venv
       - "{{.PIP_PATH}} install -r requirements.txt"
+      - ./venv/bin/ansible-galaxy collection install community.docker
 
   ping:
     desc: "Ping inventory.ini"
     cmds:
       - "{{.ANSBILE_PATH}} -m ping all"
+
+  playbook:
+    desc: "Run all playbooks"
+    cmds:
+      - "{{.PLAYBOOK_PATH}} playbook.yaml \
+        --tags all \
+        --extra-vars vars.yaml \
+        -vv"
+
+  docker-pull:
+    desc: "Pull and save containers localy if not exists"
+    cmds:
+      - |
+        if [ ! -f "./llm-engine.tar.gz" ]; then
+          docker pull ollama/ollama:latest
+          docker tag ollama/ollama:latest llm-engine:latest
+          docker save llm-engine:latest | gzip > llm-engine.tar.gz
+        fi
+        if [ ! -f "./llm-web.tar.gz" ]; then
+          docker pull ghcr.io/open-webui/open-webui:main
+          docker tag ghcr.io/open-webui/open-webui:main llm-web:latest
+          docker save llm-web:latest | gzip > llm-web.tar.gz
+        fi

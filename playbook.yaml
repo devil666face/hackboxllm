@@ -1,0 +1,27 @@
+---
+- name: Create hackboxllm
+  gather_facts: false
+  become: true
+  strategy: free
+  hosts: hackboxllm
+  tags:
+    - all
+  vars:
+    ssh_pub_key: "./keys/id_rsa.pub"
+    ssh_key_user: "{{ ansible_ssh_user }}"
+    app_path: "/opt/docker/hackboxllm"
+    ollama_tag: "ollama/ollama:latest"
+    web_tag: "ghcr.io/open-webui/open-webui:main"
+  tasks:
+    - name: Play hackboxllm_env
+      block:
+        - name: Add ssh key with user
+          import_tasks: tasks/add_ssh_key.yaml
+
+        - name: Play hackboxllm_env
+          include_role:
+            name: hackboxllm_env
+      rescue:
+        - name: Print error
+          debug:
+            msg: "[Error] {{ inventory_hostname }}"

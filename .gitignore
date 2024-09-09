@@ -1,3 +1,4 @@
 /keys/id_rsa
 /venv
 /inventory.ini
+/vars.yaml
