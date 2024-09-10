@@ -14,14 +14,14 @@
     state: present
     update_cache: yes
 
-- name: Pull docker images for rename it
-  docker_image:
-    name: "{{ ollama_tag }}"
-    source: pull
-- name: Pull docker images for rename it
-  docker_image:
-    name: "{{ web_tag }}"
-    source: pull
+# - name: Pull docker images for rename it
+#   docker_image:
+#     name: "{{ ollama_tag }}"
+#     source: pull
+# - name: Pull docker images for rename it
+#   docker_image:
+#     name: "{{ web_tag }}"
+#     source: pull
 
 # - name: Rename (tag) the Docker image
 #   shell: |

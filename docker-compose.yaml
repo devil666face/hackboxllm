@@ -30,9 +30,9 @@ services:
   nginx:
     container_name: proxy
     build:
-      context: ./docker/nginx
+      context: ./volumes/nginx
     ports:
-      - 8080:8080
+      - 80:8080
     volumes:
-      - ./docker/nginx/server.conf:/etc/nginx/conf.d/server.conf
+      - ./volumes/nginx/server.conf:/etc/nginx/conf.d/server.conf
     restart: unless-stopped
