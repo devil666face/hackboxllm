@@ -23,18 +23,18 @@
     name: "{{ web_tag }}"
     source: pull
 
-- name: Rename (tag) the Docker image
-  shell: |
-    docker tag {{ ollama_tag }} engine:latest
-- name: Rename (tag) the Docker image
-  shell: |
-    docker tag {{ web_tag }} web:latest
+# - name: Rename (tag) the Docker image
+#   shell: |
+#     docker tag {{ ollama_tag }} engine:latest
+# - name: Rename (tag) the Docker image
+#   shell: |
+#     docker tag {{ web_tag }} web:latest
 
-- name: Ensure the target docker directory exists
-  file:
-    path: "{{ app_path }}"
-    state: directory
-    mode: "0700"
+# - name: Ensure the target docker directory exists
+#   file:
+#     path: "{{ app_path }}"
+#     state: directory
+#     mode: "0700"
 
 - name: Copy ./docker-compose.yaml to {{ app_path }}/docker-compose.yaml"
   copy:

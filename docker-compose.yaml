@@ -2,8 +2,8 @@ version: "3"
 
 services:
   engine:
-    image: engine:latest
-    # image: ollama/ollama:latest
+    # image: engine:latest
+    image: ollama/ollama:latest
     container_name: engine
     pull_policy: always
     tty: true
@@ -12,8 +12,8 @@ services:
     restart: unless-stopped
 
   web:
-    image: web:latest
-    # image: ghcr.io/open-webui/open-webui:main
+    # image: web:latest
+    image: ghcr.io/open-webui/open-webui:main
     container_name: web
     depends_on:
       - engine

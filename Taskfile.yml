@@ -38,11 +38,9 @@ tasks:
       - |
         if [ ! -f "./engine.tar.gz" ]; then
           docker pull ollama/ollama:latest
-          docker tag ollama/ollama:latest engine:latest
-          docker save engine:latest | gzip > engine.tar.gz
+          docker save ollama/ollama:latest | gzip > engine.tar.gz
         fi
         if [ ! -f "./web.tar.gz" ]; then
           docker pull ghcr.io/open-webui/open-webui:main
-          docker tag ghcr.io/open-webui/open-webui:main web:latest
-          docker save web:latest | gzip > web.tar.gz
+          docker save ghcr.io/open-webui/open-webui:main | gzip > web.tar.gz
         fi
