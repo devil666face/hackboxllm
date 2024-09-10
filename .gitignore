@@ -1,4 +1,5 @@
 /keys/id_rsa
+/volumes/web/cache/embedding/models
 /creds
 /venv
 /inventory.ini
