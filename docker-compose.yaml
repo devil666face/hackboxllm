@@ -20,11 +20,19 @@ services:
     environment:
       - 'OLLAMA_BASE_URL=http://engine:11434'
       - 'WEBUI_SECRET_KEY='
-    ports:
-      - 80:8080
     volumes:
       - ./volumes/web:/app/backend/data
     # Я хз что это
     extra_hosts:
       - host.docker.internal:host-gateway
+    restart: unless-stopped
+
+  nginx:
+    container_name: proxy
+    build:
+      context: ./docker/nginx
+    ports:
+      - 8080:8080
+    volumes:
+      - ./docker/nginx/server.conf:/etc/nginx/conf.d/server.conf
     restart: unless-stopped
