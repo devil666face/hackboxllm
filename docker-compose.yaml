@@ -2,38 +2,50 @@ version: "3"
 
 services:
   engine:
-    # image: engine:latest
     image: ollama/ollama:latest
     container_name: engine
     pull_policy: always
+    networks:
+      - llmnet
     tty: true
     volumes:
       - ./volumes/engine:/root/.ollama
     restart: unless-stopped
 
-  web:
-    # image: web:latest
-    image: ghcr.io/open-webui/open-webui:main
-    container_name: web
-    depends_on:
-      - engine
-    environment:
-      - 'OLLAMA_BASE_URL=http://engine:11434'
-      - 'WEBUI_SECRET_KEY='
-    volumes:
-      - ./volumes/web:/app/backend/data
-    # Я хз что это
-    extra_hosts:
-      - host.docker.internal:host-gateway
-    restart: unless-stopped
-
   nginx:
-    container_name: proxy
+    container_name: nginx
     build:
-      context: ./volumes/nginx
+      context: ./docker/nginx
+    networks:
+      - proxynet
     ports:
       - 443:8443
     volumes:
       - ./volumes/nginx/server.conf:/etc/nginx/conf.d/server.conf
       - ./volumes/nginx/ssl:/etc/nginx/ssl
     restart: unless-stopped
+
+  web:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: web
+    depends_on:
+      - engine
+      - nginx
+    networks:
+      - proxynet
+      - llmnet
+    environment:
+      - 'OLLAMA_BASE_URL=http://engine:11434'
+      - 'WEBUI_SECRET_KEY='
+    volumes:
+      - ./volumes/web:/app/backend/data
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+
+networks:
+  proxynet:
+    external: true
+  llmnet:
+    external: true
+

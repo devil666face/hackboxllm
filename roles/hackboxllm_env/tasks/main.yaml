@@ -1,19 +1,4 @@
 ---
-- name: Enable IP forwarding temporarily
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: 1
-    state: present
-    reload: yes
-
-- name: Install docker requirements
-  apt:
-    name:
-      - docker.io
-      - docker-compose
-    state: present
-    update_cache: yes
-
 # - name: Pull docker images for rename it
 #   docker_image:
 #     name: "{{ ollama_tag }}"
@@ -35,6 +20,28 @@
 #     path: "{{ app_path }}"
 #     state: directory
 #     mode: "0700"
+
+- name: Enable IP forwarding temporarily
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
+- name: Install docker requirements
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+    state: present
+    update_cache: yes
+
+- name: Create custom Docker network
+  community.docker.docker_network:
+    name:
+      - proxynet
+      - llmnet
+    state: present
 
 - name: Copy ./docker-compose.yaml to {{ app_path }}/docker-compose.yaml"
   copy:

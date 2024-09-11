@@ -18,6 +18,8 @@ tasks:
       - python3 -m venv venv
       - "{{.PIP_PATH}} install -r requirements.txt"
       - ./venv/bin/ansible-galaxy collection install community.docker
+      # - docker network create proxynet
+      # - docker network create llmnet
 
   ping:
     desc: "Ping inventory.ini"
