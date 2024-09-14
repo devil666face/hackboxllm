@@ -15,3 +15,5 @@
 /volumes/nginx/ssl
 /volumes/web/cache/embedding/models
 /web.tar.gz
+/volumes/engine/models/manifests/*
+/volumes/engine/models/blobs/*
