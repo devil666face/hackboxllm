@@ -4,6 +4,17 @@
 ```bash
 cd ansible
 ```
+
+### Качаем все зависимости
+Коллекции
+```bash
+ansible-galaxy collection install -r requirements.yml -p ./ --force
+```
+Роли
+```bash
+ansible-galaxy role install -r requirements.yml
+```
+
 ### Настроить инвентарь
 ```bash
 cp inventory/inventory.yaml.sample inventory.yaml
