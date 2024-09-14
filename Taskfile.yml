@@ -1,0 +1,57 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+
+  init:
+    desc: "Local ansbile installation"
+    dir: ansible
+    cmds:
+      - python3 -m venv venv
+      - ./venv/bin/pip install -r requirements.txt
+      - ./venv/bin/ansible-galaxy collection install -r requirements.yml -p ./ --force
+      - ./venv/bin/ansible-galaxy role install -r requirements.yml
+      - cp inventory/inventory.yaml.sample inventory/inventory.yaml
+
+  pre-install:
+    vars:
+      user: user
+    desc: "Create user"
+    dir: ansible
+    cmds:
+      - |
+        ./venv/bin/ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml \
+        --tags "create_user" \
+        --extra-vars "ansible_user={{ .user }}" \
+        --ask-pass --become
+
+  pre-install-astra:
+    vars:
+      user: astra
+    desc: "Create user with astra"
+    dir: ansible
+    cmds:
+      - |
+        ./venv/bin/ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml \
+        --tags "create_user" \
+        --extra-vars "ansible_user={{ .user }}" \
+        --extra-vars @astra.vars.yaml \
+        --ask-pass --become
+
+  playbook:
+    desc: "Run all playbooks"
+    dir: ansible
+    cmds:
+      - |
+        ./venv/bin/ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml
+
+  playbook-astra:
+    desc: "Run all playbooks with astra"
+    dir: ansible
+    cmds:
+      - |
+        ./venv/bin/ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml \
+        --extra-vars @astra.vars.yaml

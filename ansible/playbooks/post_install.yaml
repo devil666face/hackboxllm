@@ -1,7 +1,7 @@
 ---
 - name: Post install
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Remove the package
       apt:

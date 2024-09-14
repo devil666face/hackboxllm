@@ -1,0 +1,4 @@
+ansible_os_family: "Debian"
+docker_apt_ansible_distribution: "debian"
+ansible_distribution_release: "buster"
+docker_apt_release_channel: "stable"

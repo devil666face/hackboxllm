@@ -1,7 +1,7 @@
 ---
 - name: Copy all apps files
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Creates directory
       file:

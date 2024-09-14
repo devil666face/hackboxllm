@@ -23,7 +23,7 @@ ansible-galaxy role install -r requirements.yml
 ### Настроить инвентарь
 
 ```bash
-cp inventory/inventory.yaml.sample inventory.yaml
+cp inventory/inventory.yaml.sample inventory/inventory.yaml
 ```
 
 Указываем адрес нашей целевой машины в директиве `ansible_host`, при необходимости указываем порт в директиве `ansible_port`
@@ -40,6 +40,8 @@ ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "create_
 После этого в терминал ввести пароль от УЗ
 
 В случае работы с ALSE необходимо добавлять _extra-vars_, например
+
+> `sudo astra-mic-control disable`
 
 ```bash
 ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "create_user" --extra-vars="ansible_user=astra ansible_os_family='Debian'" --become --ask-pass
@@ -77,14 +79,16 @@ ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "start_a
 ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "stop_app"
 ```
 
-## Ollama
+## Работа с ollama
 
 ```bash
 ollama pull gemma2:2b
 ollama create mario -f models/Modelfile.example
 ```
 
-### PARAMETER temperature 2.0
+### Parameter
+
+#### PARAMETER temperature 2.0
 
 ```
 ❯ ollama run mario
@@ -93,7 +97,7 @@ Wahoo!  I'm Mario, and I can always count on you to give me a high five! *chuckl
  You gotta keep this plumber happy!  💪 😄
 ```
 
-### PARAMETER temperature 0.0
+#### PARAMETER temperature 0.0
 
 ```
 ❯ ollama run mario
