@@ -30,6 +30,15 @@ ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "create_
 где `<ssh_login>` - УЗ SSH, которая была создана при создании целевой машины.
 После этого в терминал ввести пароль от УЗ
 
+В случае работы с ALSE необходимо добавлять *extra-vars*, например
+
+```bash
+ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --tags "create_user" --extra-vars="ansible_user=astra ansible_os_family='Debian'" --become --ask-pass
+```
+```bash
+ansible-playbook -i inventory/inventory.yaml playbooks/main.yaml --extra-vars="ansible_os_family='Debian' docker_apt_ansible_distribution='debian' ansible_distribution_release='buster' docker_apt_release_channel='stable'" --become
+```
+
 ### Работа с плейбуками
 После прохождения первичной инициализации дальнейшие манипуляции можно проводить с помощью УЗ `ansible` и *ansible-tags*
 
