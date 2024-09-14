@@ -1,0 +1,47 @@
+---
+- hosts: all
+  tasks:
+    - ansible.builtin.debug:
+        msg: Play hackboxllm deploy
+
+- name: Create ansible user
+  import_playbook: create_ansible_user.yaml
+  tags:
+    - prepare
+    - create_user
+
+- name: Pre install
+  import_playbook: pre_install.yaml
+  tags:
+    - prepare
+
+- name: Install Docker and docker compose
+  import_playbook: docker_install.yaml
+  tags:
+    - prepare
+
+- name: Copy app files
+  import_playbook: copy_app.yaml
+  tags:
+    - prepare
+    - deploy
+    - copy_files
+    - update_app
+
+- name: Deploy app
+  import_playbook: deploy_app.yaml
+  tags:
+    - prepare
+    - deploy
+    - start_app
+    - update_app
+
+- name: Post install
+  import_playbook: post_install.yaml
+  tags:
+    - prepare
+
+- name: Stop app
+  import_playbook: stop_app.yaml
+  tags:
+    - stop_app

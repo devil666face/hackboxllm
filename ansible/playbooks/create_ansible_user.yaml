@@ -1,0 +1,6 @@
+---
+- name: Prepare Ansible user
+  hosts: all
+  become: yes
+  roles:
+    - ansible-role-create-user-ansible
