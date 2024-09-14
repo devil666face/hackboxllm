@@ -1,0 +1,11 @@
+---
+- name: Pre install
+  hosts: all
+  become: yes
+  tasks:
+    - name: Enable IP forwarding temporarily
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+        reload: yes

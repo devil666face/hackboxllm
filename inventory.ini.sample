@@ -1,3 +1,0 @@
-[hackboxllm]
-hackboxllm_host    ansible_ssh_host=192.168.123.245    ansible_password=astra   ansible_sudo_pass=astra    ansible_user=astra
-

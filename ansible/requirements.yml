@@ -1,0 +1,10 @@
+collections:
+  - community.general
+  - community.docker
+
+roles:
+  - name: geerlingguy.docker
+    version: master
+  - name: ansible-role-create-user-ansible
+    src: https://github.com/3ayazaya/ansible-role-create-user-ansible.git
+    version: master

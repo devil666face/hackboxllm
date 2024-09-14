@@ -1,0 +1,25 @@
+---
+- name: Copy all apps files
+  hosts: all
+  become: yes
+  tasks:
+    - name: Creates directory
+      file:
+        path: "{{ app_path }}"
+        state: directory
+
+    - name: Copy a docker-compose file
+      copy:
+        src: ../../docker-compose.yaml
+        dest: "{{ app_path }}/docker-compose.yaml"
+        mode: "0600"
+
+    - name: Copy docker build files
+      copy:
+        src: ../../docker
+        dest: "{{ app_path }}"
+
+    - name: Copy docker volumes files
+      copy:
+        src: ../../volumes
+        dest: "{{ app_path }}"

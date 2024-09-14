@@ -1,0 +1,17 @@
+---
+- name: Deploy Apps
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create custom Docker network proxynet
+      community.docker.docker_network:
+        name: proxynet
+        state: present
+    - name: Create custom Docker network llmnet
+      community.docker.docker_network:
+        name: llmnet
+        state: present
+    - name: docker-compose up
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_path }}"
+        state: present

@@ -1,0 +1,4 @@
+docker_install_compose_plugin: true
+docker_edition: 'ce'
+docker_users:
+  - ansible
