@@ -1,3 +1,5 @@
+> [astra1.7.5.qcow2](https://registry.astralinux.ru/ui/api/v1/download?repoKey=mg-generic&path=alse%252Fqemu%252False-1.7.5uu1-max-qemu-mg14.0.0-amd64.qcow2&isNativeBrowsing=true)
+
 ## Подготовка к запуску
 
 Склонировать репозиторий и перейти в папку `ansible`
