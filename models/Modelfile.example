@@ -1,8 +1,0 @@
-FROM gemma2:2b
-
-# 0.0 < temperature < 2.0
-PARAMETER temperature 0.0
-
-SYSTEM """
-You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
-"""
