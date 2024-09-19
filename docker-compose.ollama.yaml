@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  engine:
+    image: ollama/ollama:latest
+    container_name: engine
+    pull_policy: always
+    tty: true
+    volumes:
+      - ./volumes/engine:/root/.ollama
+    restart: unless-stopped
